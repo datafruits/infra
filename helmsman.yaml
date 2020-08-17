@@ -1,0 +1,83 @@
+# HELLO
+# This is all completely unimplemented
+# Do NOT clone this repo and expect to be up and running
+# I swear to god if you message me saying it's broken
+# I will require a $5 cashapp before I reply
+# and tell you "I know."
+
+metadata:
+  maintainer: Cass <cass@swag.lgbt>
+  description: Literally the entire datafruits stack documented in a single file. Or at least that's the plan, anyway.
+  more-info: https://github.com/Praqma/helmsman/blob/master/docs/desired_state_specification.md
+
+# Eventually, we should move prod into protected,
+# and set up a couple namespaces for staging and prod
+# for running like end-to-end-tests and stuff like that
+namespaces:
+  dev:
+  staging:
+    # protected: false
+  production:
+    protected: false # true
+
+helmRepos:
+  traefik: https://containous.github.io/traefik-helm-chart
+  bitnami: https://charts.bitnami.com/bitnami
+
+apps:
+  traefik:
+    namespace: production
+    enabled: true
+    chart: traefik/traefik
+    version: 8.12.0
+    description: Traefik ingress controller. Used specifically for its ability to route non-HTTP requests, i.e. RTMP(S)
+    valuesFile: ./values/traefik.yaml
+  postgres:
+    namespace: production
+    enabled: true
+    chart: bitnami/postgresql-ha
+    version: 3.5.5
+    description: Postgresql database with some high availability features, including automatic failover
+    valuesFile: ./values/postgres.yaml
+  api:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/api
+    version: 0.1.0
+    description: Internal API for datafruits.fm
+    valuesFile: ./values/streampusher-api.yaml
+  hotdog-lounge:
+    namespace: production
+    enabled: true
+    chart: ./charts/hotdog-lounge
+    version: 0.1.0
+    description: Chat app powering datafruits.fm
+    valuesFile: ./values/hotdog-lounge.yaml
+  streampusher:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/site
+    version: 0.1.0
+    description: Admin site for datafruits.fm # TODO this description sucks
+    valuesFile: ./values/streampusher-site.yaml
+  datafruits.fm:
+    namespace: production
+    enabled: true
+    chart: ./charts/datafruits.fm
+    version: 0.1.0
+    description: It's just a website
+    valuesFile: ./values/datafruits.fm.yaml
+  viz:
+    namespace: production
+    enabled: true
+    chart: ./charts/viz
+    version: 0.1.0
+    description: Visualization server for opening your third eye
+    valuesFile: ./values/viz.yaml
+  radio:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/radio
+    version: 0.1.0
+    description: what do u think it is, ya dingus
+    valuesFile: ./values/radio.yaml
