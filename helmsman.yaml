@@ -25,6 +25,48 @@ helmRepos:
   bitnami: https://charts.bitnami.com/bitnami
 
 apps:
+  datafruits.fm:
+    namespace: production
+    enabled: true
+    chart: ./charts/datafruits.fm
+    version: 0.1.0
+    description: It's just a website
+    valuesFile: ./values/datafruits.fm.yaml
+  radio:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/radio
+    version: 0.1.0
+    description: what do u think it is, ya dingus
+    valuesFile: ./values/radio.yaml
+  viz:
+    namespace: production
+    enabled: true
+    chart: ./charts/viz
+    version: 0.1.0
+    description: Visualization server for opening your third eye
+    valuesFile: ./values/viz.yaml
+  hotdog-lounge:
+    namespace: production
+    enabled: true
+    chart: ./charts/hotdog-lounge
+    version: 0.1.0
+    description: Chat app powering datafruits.fm
+    valuesFile: ./values/hotdog-lounge.yaml
+  api:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/api
+    version: 0.1.0
+    description: Internal API for datafruits.fm
+    valuesFile: ./values/streampusher-api.yaml
+  streampusher:
+    namespace: production
+    enabled: true
+    chart: ./charts/streampusher/site
+    version: 0.1.0
+    description: Admin site for datafruits.fm # TODO this description sucks
+    valuesFile: ./values/streampusher-site.yaml
   traefik:
     namespace: production
     enabled: true
@@ -39,45 +81,17 @@ apps:
     version: 3.5.5
     description: Postgresql database with some high availability features, including automatic failover
     valuesFile: ./values/postgres.yaml
-  api:
+  prometheus:
     namespace: production
     enabled: true
-    chart: ./charts/streampusher/api
-    version: 0.1.0
-    description: Internal API for datafruits.fm
-    valuesFile: ./values/streampusher-api.yaml
-  hotdog-lounge:
+    chart: stable/prometheus
+    version: 11.12.0
+    description: Prometheus monitoring for all of our little things going on here.
+    valuesFile: ./values/prometheus.yaml
+  grafana:
     namespace: production
     enabled: true
-    chart: ./charts/hotdog-lounge
-    version: 0.1.0
-    description: Chat app powering datafruits.fm
-    valuesFile: ./values/hotdog-lounge.yaml
-  streampusher:
-    namespace: production
-    enabled: true
-    chart: ./charts/streampusher/site
-    version: 0.1.0
-    description: Admin site for datafruits.fm # TODO this description sucks
-    valuesFile: ./values/streampusher-site.yaml
-  datafruits.fm:
-    namespace: production
-    enabled: true
-    chart: ./charts/datafruits.fm
-    version: 0.1.0
-    description: It's just a website
-    valuesFile: ./values/datafruits.fm.yaml
-  viz:
-    namespace: production
-    enabled: true
-    chart: ./charts/viz
-    version: 0.1.0
-    description: Visualization server for opening your third eye
-    valuesFile: ./values/viz.yaml
-  radio:
-    namespace: production
-    enabled: true
-    chart: ./charts/streampusher/radio
-    version: 0.1.0
-    description: what do u think it is, ya dingus
-    valuesFile: ./values/radio.yaml
+    chart: stable/grafana
+    version: 5.5.5
+    description: Dashboard for looking at the Prometheus metrics
+    valuesFile: ./values/grafana.yaml
