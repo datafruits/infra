@@ -23,6 +23,9 @@ namespaces:
 helmRepos:
   traefik: https://containous.github.io/traefik-helm-chart
   bitnami: https://charts.bitnami.com/bitnami
+  # The stable repository is no longer included by default in Helm 3,
+  # but a few charts are still maintained on it.
+  stable: https://kubernetes-charts.storage.googleapis.com
 
 apps:
   datafruits.fm:
